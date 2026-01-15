@@ -40,4 +40,12 @@ def __str__(self):
         return f"{self.text[:50]}..."
 
 
-        
+        class Evaluation(models.Model):
+    candidate = models.ForeignKey('Candidate', on_delete=models.CASCADE)
+    evaluator = models.ForeignKey('Evaluator', on_delete=models.SET_NULL, null=True)
+    questions = models.ManyToManyField('Question')
+    created_at = models.DateTimeField(auto_now_add=True)
+    completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Evaluation of {self.candidate} by {self.evaluator}"
