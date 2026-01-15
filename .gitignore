@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+backend/venv/
+
+# Environment variables
+.env
+
+# Database (optional later)
+*.sqlite3
+
+# Node modules (if any frontend JS)
+node_modules/
