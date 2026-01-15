@@ -20,5 +20,24 @@ class Evaluator(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)   
 
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class Question(models.model):
+    QUESTION_TYPES = [
+        ('MCQ', 'Multiple Choice'),
+        ('TF', 'True/False'),
+        ('SA', 'Short Answer'),
+    ]
+
+    text = models.TextField()  
+        question_type = models.CharField(max_length=10, choices=QUESTION_TYPES, default='MCQ')
+    max_score = models.IntegerField(default=1)
+    created_at = models.DateTimeField(auto_now_add=True)  
+
+def __str__(self):
+        return f"{self.text[:50]}..."
+
+
+        
