@@ -12,6 +12,13 @@ class Candidate(models.model):
     def _str_(self):
         return f"{self.first_name} {self.last_name}"
 
+class Evaluator(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    role = models.CharField(max_length=100, default="Teacher/HR")
+    created_at = models.DateTimeField(auto_now_add=True)   
 
-class Evaluator(models.model):
-    first_name = models.CharField(max_length=100)     
+
+    def _str_(self):
+        return f"{self.first_name} {self.last_name}"
