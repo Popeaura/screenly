@@ -1,13 +1,17 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Features from "./components/Features";
+import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50">
+    <div className="min-h-screen bg-slate-950 text-slate-50 flex flex-col">
       <Navbar />
-      <Hero />
-      <Features />
+      <main className="flex-1">
+        <Hero />
+        <Features />
+      </main>
+      <Footer />
     </div>
   );
 }
