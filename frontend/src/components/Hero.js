@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="hero">
       {/* Left side */}
@@ -12,7 +15,12 @@ const Hero = () => {
         </p>
 
         <div className="hero-cta">
-          <button className="btn-primary">Get Started</button>
+          <button
+            className="btn-primary"
+            onClick={() => navigate("/signup")}
+          >
+            Get Started
+          </button>
           <button className="btn-ghost">Try for free</button>
         </div>
 

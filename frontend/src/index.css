@@ -220,6 +220,31 @@ body {
   color: #22c55e;
   margin-top: 4px;
 }
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.form-group label {
+  color: var(--text-muted);
+}
+
+.form-group input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #1f2937;
+  background: #020617;
+  color: var(--text-main);
+}
+
 
 /* bottom stats */
 
