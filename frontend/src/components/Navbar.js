@@ -1,16 +1,26 @@
-function Navbar() {
+import React from "react";
+
+const Navbar = () => {
   return (
-    <header className="w-full border-b border-slate-800 bg-slate-950/80">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        <div className="text-sm font-semibold text-slate-50">
-          Screenly
-        </div>
-        <button className="rounded-lg bg-emerald-500 px-3 py-1.5 text-xs font-medium text-emerald-950 hover:bg-emerald-400">
-          Sign in
-        </button>
+    <header className="navbar">
+      <div className="nav-left">
+        <div className="logo-circle" />
+        <span className="brand-text">Dev.</span>
+      </div>
+
+      <nav className="nav-links">
+        <span>Home</span>
+        <span>About Us</span>
+        <span>Courses</span>
+        <span>Contact</span>
+      </nav>
+
+      <div className="nav-actions">
+        <button className="btn-outline">Log in</button>
+        <button className="btn-solid">Start Free Trial</button>
       </div>
     </header>
   );
-}
+};
 
 export default Navbar;

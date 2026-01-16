@@ -1,23 +1,60 @@
-function Hero() {
+import React from "react";
+
+const Hero = () => {
   return (
-    <section className="flex flex-col items-center justify-center gap-4 px-4 py-16 text-center">
-      <h1 className="text-3xl font-semibold text-slate-50 sm:text-4xl">
-        Launch better products, faster.
-      </h1>
-      <p className="max-w-xl text-sm text-slate-300 sm:text-base">
-        This is your hero section. We will customize the text and layout once
-        everything is wired up.
-      </p>
-      <div className="flex flex-col gap-3 sm:flex-row">
-        <button className="rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-medium text-emerald-950 hover:bg-emerald-400">
-          Get started
-        </button>
-        <button className="rounded-lg border border-slate-700 px-5 py-2.5 text-sm font-medium text-slate-100 hover:bg-slate-900">
-          Learn more
-        </button>
+    <section className="hero">
+      {/* Left side */}
+      <div>
+        <h1 className="hero-title">GROW UP YOUR SKILL IN MINUTES</h1>
+        <p className="hero-subtitle">
+          Explore unlimited courses and assessments that fit your process of
+          skill development.
+        </p>
+
+        <div className="hero-cta">
+          <button className="btn-primary">Get Started</button>
+          <button className="btn-ghost">Try for free</button>
+        </div>
+
+        <div className="hero-stats">
+          <div className="stat-block">
+            <div className="stat-badge">
+              <span role="img" aria-label="smile">
+                🙂
+              </span>
+              <span>600 happy students</span>
+            </div>
+            <p className="small-muted">
+              “The process of evaluation has never been this easy.”
+            </p>
+          </div>
+
+          <div className="stat-block">
+            <span className="small-muted">Trusted worldwide</span>
+            <div className="stat-value">Auto skill reports</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Right side */}
+      <div className="hero-figure">
+        <div className="hero-card">
+          <div className="hero-floating">
+            <div>5 Star Rating</div>
+            <div className="small-muted">
+              Avg rating 4.8 makes us world best
+            </div>
+            <div className="rating-stars">★★★★★</div>
+          </div>
+
+          <div className="hero-photo">
+            {/* Replace with your own image later */}
+            Student image placeholder
+          </div>
+        </div>
       </div>
     </section>
   );
-}
+};
 
 export default Hero;

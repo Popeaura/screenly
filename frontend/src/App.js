@@ -1,19 +1,11 @@
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Features from "./components/Features";
-import Footer from "./components/Footer";
+import React from "react";
+import "./index.css";
+import LandingPage from "./pages/LandingPage";
 
-function App() {
-  return (
-    <div className="min-h-screen bg-slate-950 text-slate-50 flex flex-col">
-      <Navbar />
-      <main className="flex-1">
-        <Hero />
-        <Features />
-      </main>
-      <Footer />
-    </div>
-  );
-}
+const App = () => (
+  <div className="app-root">
+    <LandingPage />
+  </div>
+);
 
 export default App;
