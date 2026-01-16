@@ -65,7 +65,15 @@ body {
   display: flex;
   gap: 24px;
   font-size: 14px;
+}
+
+.nav-links a {
   color: var(--text-muted);
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  color: var(--text-main);
 }
 
 .nav-actions {
@@ -220,6 +228,18 @@ body {
   color: #22c55e;
   margin-top: 4px;
 }
+
+/* bottom stats */
+
+.bottom-stats {
+  display: flex;
+  gap: 32px;
+  margin-top: 32px;
+  font-size: 13px;
+}
+
+/* forms */
+
 .signup-form {
   display: flex;
   flex-direction: column;
@@ -245,15 +265,7 @@ body {
   color: var(--text-main);
 }
 
-
-/* bottom stats */
-
-.bottom-stats {
-  display: flex;
-  gap: 32px;
-  margin-top: 32px;
-  font-size: 13px;
-}
+/* responsive */
 
 @media (max-width: 900px) {
   .hero {

@@ -7,7 +7,6 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // later you’ll call the backend here
     navigate("/dashboard");
   };
 

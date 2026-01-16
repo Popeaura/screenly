@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "../components/Navbar";
 
 const DashboardPage = () => {
-  // later you’ll read the real user name from context / API
   const fakeName = "Alex";
 
   return (

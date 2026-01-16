@@ -7,6 +7,7 @@ const SignupPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // later call backend, for now just go to dashboard
     navigate("/dashboard");
   };
 
@@ -20,7 +21,21 @@ const SignupPage = () => {
         </p>
 
         <form className="signup-form" onSubmit={handleSubmit}>
-          {/* existing fields unchanged */}
+          <div className="form-group">
+            <label>Name</label>
+            <input placeholder="Your name" />
+          </div>
+          <div className="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="you@example.com" />
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input type="password" placeholder="••••••••" />
+          </div>
+          <button type="submit" className="btn-primary" style={{ width: "100%" }}>
+            Continue
+          </button>
         </form>
       </div>
     </div>

@@ -6,7 +6,11 @@ const Navbar = () => {
 
   return (
     <header className="navbar">
-      <div className="nav-left" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+      <div
+        className="nav-left"
+        onClick={() => navigate("/")}
+        style={{ cursor: "pointer" }}
+      >
         <div className="logo-circle" />
         <span className="brand-text">Dev.</span>
       </div>
