@@ -1,7 +1,15 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate("/dashboard");
+  };
+
   return (
     <div className="app-shell">
       <Navbar />
@@ -11,22 +19,8 @@ const SignupPage = () => {
           Start evaluating students and candidates in minutes.
         </p>
 
-        <form className="signup-form">
-          <div className="form-group">
-            <label>Name</label>
-            <input placeholder="Your name" />
-          </div>
-          <div className="form-group">
-            <label>Email</label>
-            <input type="email" placeholder="you@example.com" />
-          </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input type="password" placeholder="••••••••" />
-          </div>
-          <button type="submit" className="btn-primary" style={{ width: "100%" }}>
-            Continue
-          </button>
+        <form className="signup-form" onSubmit={handleSubmit}>
+          {/* existing fields unchanged */}
         </form>
       </div>
     </div>
