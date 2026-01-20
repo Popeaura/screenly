@@ -6,6 +6,8 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import PlaceholderPage from "./pages/PlaceholderPage";
+import CreateEvaluationPage from "./pages/CreateEvaluationPage";
+
 
 const App = () => (
   <div className="app-root">
@@ -17,6 +19,7 @@ const App = () => (
       <Route path="/about" element={<PlaceholderPage title="About Us" />} />
       <Route path="/courses" element={<PlaceholderPage title="Courses" />} />
       <Route path="/contact" element={<PlaceholderPage title="Contact" />} />
+      <Route path="/evaluations/new" element={<CreateEvaluationPage />} />
     </Routes>
   </div>
 );
