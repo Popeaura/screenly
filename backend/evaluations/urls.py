@@ -1,17 +1,17 @@
-from rest_framework.routers import DefaultRouter
-from .views import (
-    CandidateViewSet,
-    EvaluatorViewSet,
-    QuestionViewSet,
-    EvaluationViewSet,
-    ResultViewSet,
+from django.contrib import admin
+from django.urls import path, include
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
 )
 
-router = DefaultRouter()
-router.register("candidates", CandidateViewSet)
-router.register("evaluators", EvaluatorViewSet)
-router.register("questions", QuestionViewSet)
-router.register("evaluations", EvaluationViewSet)
-router.register("results", ResultViewSet)
+urlpatterns = [
+    path('admin/', admin.site.urls),
 
-urlpatterns = router.urls
+    # JWT auth
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # App APIs
+    path('api/', include('evaluations.urls')),
+]
