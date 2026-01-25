@@ -7,6 +7,18 @@ const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
+// Add token to every request
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 export const fetchEvaluations = async () => {
   try {
     const response = await api.get("/evaluations/");
@@ -27,7 +39,6 @@ export const createEvaluation = async (data) => {
   }
 };
 
-// NEW: Update evaluation
 export const updateEvaluation = async (id, data) => {
   try {
     const response = await api.put(`/evaluations/${id}/`, data);
@@ -38,7 +49,6 @@ export const updateEvaluation = async (id, data) => {
   }
 };
 
-// NEW: Delete evaluation
 export const deleteEvaluation = async (id) => {
   try {
     await api.delete(`/evaluations/${id}/`);

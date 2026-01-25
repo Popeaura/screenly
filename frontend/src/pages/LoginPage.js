@@ -1,81 +1,105 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../api/auth";
+import axios from "axios";
 
 const LoginPage = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const username = e.target.username.value;
-    const password = e.target.password.value;
+    setError("");
+    setLoading(true);
 
     try {
-      await login(username, password);
-      navigate("/dashboard");
+      // Call Django token endpoint
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/token/",
+        {
+          username,
+          password,
+        }
+      );
+
+      // Save tokens to localStorage
+      localStorage.setItem("accessToken", response.data.access);
+      localStorage.setItem("refreshToken", response.data.refresh);
+
+      // Redirect to evaluations page
+      navigate("/evaluations");
     } catch (err) {
-      alert("Login failed");
+      setError(err.response?.data?.detail || "Invalid username or password");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
-      <div className="w-full max-w-6xl flex justify-center">
-        <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900/80 px-6 py-8 shadow-xl">
-          <div className="mb-6 text-center">
-            <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-lime-400 text-slate-900 font-bold">
-              Sc
-            </div>
-            <h1 className="text-xl font-semibold text-slate-50">
-              Log in to Screenly
-            </h1>
-            <p className="mt-1 text-sm text-slate-400">
-              Enter your credentials to access evaluations.
-            </p>
+    <div
+      className="flex items-center justify-center min-h-screen"
+      style={{ backgroundColor: "#0f172a" }}
+    >
+      <div className="w-full max-w-md p-8 rounded-lg shadow-2xl" style={{ backgroundColor: "#1e293b" }}>
+        <h1 className="text-3xl font-bold text-center mb-6 text-white">Screenly</h1>
+        <h2 className="text-xl font-semibold text-center mb-6 text-gray-200">
+          Login
+        </h2>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-600 text-white rounded text-sm">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-2 text-gray-200">
+              Username
+            </label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              className="w-full border border-gray-600 rounded px-4 py-2 text-white"
+              style={{ backgroundColor: "#0f172a" }}
+              placeholder="Enter your username"
+              disabled={loading}
+            />
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label
-                htmlFor="username"
-                className="mb-1 block text-sm font-medium text-slate-200"
-              >
-                Username
-              </label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                required
-                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none ring-lime-400/40 placeholder:text-slate-500 focus:border-lime-400 focus:ring-2"
-                placeholder="evaluator01"
-              />
-            </div>
+          <div>
+            <label className="block text-sm font-medium mb-2 text-gray-200">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full border border-gray-600 rounded px-4 py-2 text-white"
+              style={{ backgroundColor: "#0f172a" }}
+              placeholder="Enter your password"
+              disabled={loading}
+            />
+          </div>
 
-            <div>
-              <label
-                htmlFor="password"
-                className="mb-1 block text-sm font-medium text-slate-200"
-              >
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none ring-lime-400/40 placeholder:text-slate-500 focus:border-lime-400 focus:ring-2"
-                placeholder="Enter your password"
-              />
-            </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
 
-            <button
-              type="submit"
-              className="mt-2 w-full rounded-lg bg-lime-400 py-2.5 text-sm font-semibold text-slate-900 hover:bg-lime-300 transition"
-            >
-              Log in
-            </button>
-          </form>
+        <div className="mt-6 p-4 bg-blue-900 bg-opacity-30 rounded border border-blue-700 text-sm text-gray-300">
+          <p className="font-semibold mb-2">Demo Credentials:</p>
+          <p>Username: <span className="text-white font-mono">admin</span></p>
+          <p>Password: <span className="text-white font-mono">admin</span></p>
         </div>
       </div>
     </div>
