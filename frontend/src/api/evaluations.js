@@ -17,13 +17,33 @@ export const fetchEvaluations = async () => {
   }
 };
 
-// NEW: Create evaluation
 export const createEvaluation = async (data) => {
   try {
     const response = await api.post("/evaluations/", data);
     return response.data;
   } catch (error) {
     console.error("Error creating evaluation:", error);
+    throw error;
+  }
+};
+
+// NEW: Update evaluation
+export const updateEvaluation = async (id, data) => {
+  try {
+    const response = await api.put(`/evaluations/${id}/`, data);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating evaluation:", error);
+    throw error;
+  }
+};
+
+// NEW: Delete evaluation
+export const deleteEvaluation = async (id) => {
+  try {
+    await api.delete(`/evaluations/${id}/`);
+  } catch (error) {
+    console.error("Error deleting evaluation:", error);
     throw error;
   }
 };
