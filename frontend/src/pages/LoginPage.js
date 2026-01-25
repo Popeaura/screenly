@@ -1,39 +1,29 @@
-import React from "react";
-import Navbar from "../components/Navbar";
+import { login } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    navigate("/dashboard");
+
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    try {
+      await login(email, password);
+      navigate("/dashboard");
+    } catch (err) {
+      alert("Login failed");
+    }
   };
 
   return (
-    <div className="app-shell">
-      <Navbar />
-      <div style={{ maxWidth: 380, marginTop: 40 }}>
-        <h2 style={{ marginBottom: 12 }}>Log in</h2>
-        <p className="small-muted" style={{ marginBottom: 24 }}>
-          Access your evaluations and student dashboards.
-        </p>
-
-        <form className="signup-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Email</label>
-            <input type="email" placeholder="you@example.com" />
-          </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input type="password" placeholder="••••••••" />
-          </div>
-          <button type="submit" className="btn-primary" style={{ width: "100%" }}>
-            Continue
-          </button>
-        </form>
-      </div>
-    </div>
+    <form onSubmit={handleLogin}>
+      <input name="email" placeholder="Email" />
+      <input name="password" type="password" />
+      <button type="submit">Login</button>
+    </form>
   );
 };
 
