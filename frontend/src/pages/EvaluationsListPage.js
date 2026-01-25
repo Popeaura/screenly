@@ -1,33 +1,68 @@
 import React, { useState, useEffect } from "react";
-import { fetchEvaluations } from "../api/evaluations";
+import { fetchEvaluations, createEvaluation } from "../api/evaluations";
+import EvaluationForm from "../components/EvaluationForm";
 
 const EvaluationsListPage = () => {
   const [evaluations, setEvaluations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    const loadEvaluations = async () => {
-      try {
-        setLoading(true);
-        const data = await fetchEvaluations();
-        setEvaluations(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadEvaluations();
   }, []);
+
+  const loadEvaluations = async () => {
+    try {
+      setLoading(true);
+      const data = await fetchEvaluations();
+      setEvaluations(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCreateEvaluation = async (formData) => {
+    try {
+      // Convert score to number or null
+      const dataToSubmit = {
+        ...formData,
+        score: formData.score ? parseInt(formData.score) : null,
+      };
+
+      await createEvaluation(dataToSubmit);
+      setShowForm(false);
+      
+      // Reload evaluations list
+      await loadEvaluations();
+    } catch (err) {
+      alert("Error creating evaluation: " + err.message);
+    }
+  };
 
   if (loading) return <div className="p-4">Loading evaluations...</div>;
   if (error) return <div className="p-4 text-red-600">Error: {error}</div>;
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Evaluations</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">Evaluations</h1>
+        <button
+          onClick={() => setShowForm(true)}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          + Create Evaluation
+        </button>
+      </div>
+
+      {showForm && (
+        <EvaluationForm
+          onSubmit={handleCreateEvaluation}
+          onCancel={() => setShowForm(false)}
+        />
+      )}
 
       {evaluations.length === 0 ? (
         <p>No evaluations found.</p>

@@ -17,4 +17,15 @@ export const fetchEvaluations = async () => {
   }
 };
 
+// NEW: Create evaluation
+export const createEvaluation = async (data) => {
+  try {
+    const response = await api.post("/evaluations/", data);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating evaluation:", error);
+    throw error;
+  }
+};
+
 export default api;
