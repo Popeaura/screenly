@@ -21,7 +21,7 @@ mock_evaluations = [
     }
 ]
 
-next_id = 3  # For auto-incrementing
+next_id = 3
 
 @api_view(["GET", "POST"])
 @permission_classes([AllowAny])
@@ -34,14 +34,12 @@ def evaluations_list(request):
     elif request.method == "POST":
         data = request.data
         
-        # Validate required fields
         if not data.get("candidate_name") or not data.get("title"):
             return Response(
                 {"error": "candidate_name and title are required"},
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        # Create new evaluation
         new_eval = {
             "id": next_id,
             "candidate_name": data.get("candidate_name"),
@@ -54,6 +52,41 @@ def evaluations_list(request):
         next_id += 1
         
         return Response(new_eval, status=status.HTTP_201_CREATED)
+
+
+# NEW: Handle PUT and DELETE for individual evaluations
+@api_view(["GET", "PUT", "DELETE"])
+@permission_classes([AllowAny])
+def evaluation_detail(request, pk):
+    global next_id
+    
+    # Find evaluation by id
+    evaluation = next((e for e in mock_evaluations if e["id"] == pk), None)
+    
+    if not evaluation:
+        return Response(
+            {"error": "Evaluation not found"},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    
+    if request.method == "GET":
+        return Response(evaluation)
+    
+    elif request.method == "PUT":
+        data = request.data
+        
+        # Update fields
+        evaluation["candidate_name"] = data.get("candidate_name", evaluation["candidate_name"])
+        evaluation["title"] = data.get("title", evaluation["title"])
+        evaluation["status"] = data.get("status", evaluation["status"])
+        evaluation["score"] = data.get("score", evaluation["score"])
+        
+        return Response(evaluation)
+    
+    elif request.method == "DELETE":
+        mock_evaluations.remove(evaluation)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 @api_view(["GET"])
 def test_api(request):
