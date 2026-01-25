@@ -58,4 +58,15 @@ export const deleteEvaluation = async (id) => {
   }
 };
 
+export const fetchEvaluationStats = async () => {
+  try {
+    const response = await api.get("/evaluations/stats/");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching evaluation stats:", error);
+    throw error;
+  }
+};
+
+
 export default api;

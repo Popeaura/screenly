@@ -1,8 +1,11 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import EvaluationViewSet, evaluation_stats
+
+router = DefaultRouter()
+router.register(r"evaluations", EvaluationViewSet, basename="evaluation")
 
 urlpatterns = [
-    path("test/", views.test_api, name="test_api"),
-    path("evaluations/", views.evaluations_list, name="evaluations_list"),
-    path("evaluations/<int:pk>/", views.evaluation_detail, name="evaluation_detail"),  # NEW
+    path("", include(router.urls)),
+    path("evaluations/stats/", evaluation_stats, name="evaluation_stats"),
 ]
