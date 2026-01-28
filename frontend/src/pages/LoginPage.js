@@ -28,10 +28,12 @@ const LoginPage = () => {
       localStorage.setItem("accessToken", response.data.access);
       localStorage.setItem("refreshToken", response.data.refresh);
 
-      // Redirect to evaluations page
-      navigate("/evaluations");
+      // Redirect to dashboard page (changed from /evaluations)
+      navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.detail || "Invalid username or password");
+      setError(
+        err.response?.data?.detail || "Invalid username or password"
+      );
     } finally {
       setLoading(false);
     }
@@ -42,8 +44,13 @@ const LoginPage = () => {
       className="flex items-center justify-center min-h-screen"
       style={{ backgroundColor: "#0f172a" }}
     >
-      <div className="w-full max-w-md p-8 rounded-lg shadow-2xl" style={{ backgroundColor: "#1e293b" }}>
-        <h1 className="text-3xl font-bold text-center mb-6 text-white">Screenly</h1>
+      <div
+        className="w-full max-w-md p-8 rounded-lg shadow-2xl"
+        style={{ backgroundColor: "#1e293b" }}
+      >
+        <h1 className="text-3xl font-bold text-center mb-6 text-white">
+          Screenly
+        </h1>
         <h2 className="text-xl font-semibold text-center mb-6 text-gray-200">
           Login
         </h2>
@@ -98,8 +105,12 @@ const LoginPage = () => {
 
         <div className="mt-6 p-4 bg-blue-900 bg-opacity-30 rounded border border-blue-700 text-sm text-gray-300">
           <p className="font-semibold mb-2">Demo Credentials:</p>
-          <p>Username: <span className="text-white font-mono">admin</span></p>
-          <p>Password: <span className="text-white font-mono">admin</span></p>
+          <p>
+            Username: <span className="text-white font-mono">admin</span>
+          </p>
+          <p>
+            Password: <span className="text-white font-mono">admin</span>
+          </p>
         </div>
       </div>
     </div>
