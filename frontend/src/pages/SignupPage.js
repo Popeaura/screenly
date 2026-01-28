@@ -1,11 +1,41 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const API_BASE_URL = "http://127.0.0.1:8000/api";
 
 const SignupPage = () => {
-  const handleSubmit = (e) => {
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState(""); // not used in backend yet, but kept in UI
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Later: call backend signup endpoint if you add one.
-    alert("Signup UI only for now – backend not wired yet.");
+    setError("");
+    setLoading(true);
+
+    try {
+      // Call Django signup endpoint
+      await axios.post(`${API_BASE_URL}/signup/`, {
+        username,
+        password,
+        // fullName and email are ignored by backend for now,
+        // but you can add them to your model later if you want.
+      });
+
+      // On success, send user to login
+      navigate("/login");
+    } catch (err) {
+      setError(
+        err.response?.data?.detail || "Could not create account. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -24,6 +54,12 @@ const SignupPage = () => {
             </p>
           </div>
 
+          {error && (
+            <div className="mb-4 rounded-md bg-red-600/90 px-3 py-2 text-xs text-white">
+              {error}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label
@@ -37,8 +73,11 @@ const SignupPage = () => {
                 name="fullName"
                 type="text"
                 required
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
                 className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none placeholder:text-slate-500 focus:border-lime-400 focus:ring-2 focus:ring-lime-400/40"
                 placeholder="Mitchell O. A."
+                disabled={loading}
               />
             </div>
 
@@ -54,8 +93,11 @@ const SignupPage = () => {
                 name="username"
                 type="text"
                 required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none placeholder:text-slate-500 focus:border-lime-400 focus:ring-2 focus:ring-lime-400/40"
                 placeholder="evaluator01"
+                disabled={loading}
               />
             </div>
 
@@ -71,8 +113,11 @@ const SignupPage = () => {
                 name="email"
                 type="email"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none placeholder:text-slate-500 focus:border-lime-400 focus:ring-2 focus:ring-lime-400/40"
                 placeholder="you@example.com"
+                disabled={loading}
               />
             </div>
 
@@ -88,16 +133,20 @@ const SignupPage = () => {
                 name="password"
                 type="password"
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none placeholder:text-slate-500 focus:border-lime-400 focus:ring-2 focus:ring-lime-400/40"
                 placeholder="Create a strong password"
+                disabled={loading}
               />
             </div>
 
             <button
               type="submit"
-              className="mt-2 w-full rounded-lg bg-lime-400 py-2.5 text-sm font-semibold text-slate-900 hover:bg-lime-300 transition"
+              disabled={loading}
+              className="mt-2 w-full rounded-lg bg-lime-400 py-2.5 text-sm font-semibold text-slate-900 hover:bg-lime-300 transition disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Create account
+              {loading ? "Creating account..." : "Create account"}
             </button>
           </form>
 
