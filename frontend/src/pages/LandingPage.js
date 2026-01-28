@@ -33,7 +33,7 @@ const LandingPage = () => {
               Log in
             </Link>
             <Link
-              to="/login"
+              to="/signup"
               className="px-4 py-2 rounded-full bg-lime-400 text-slate-900 font-semibold hover:bg-lime-300 transition"
             >
               Start free
@@ -66,7 +66,7 @@ const LandingPage = () => {
 
             <div className="flex flex-wrap items-center gap-4 mb-6">
               <Link
-                to="/login"
+                to="/signup"
                 className="px-6 py-3 rounded-full bg-lime-400 text-slate-900 font-semibold hover:bg-lime-300 transition text-sm"
               >
                 Go to app
